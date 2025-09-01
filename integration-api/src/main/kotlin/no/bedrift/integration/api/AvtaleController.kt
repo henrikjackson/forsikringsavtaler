@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import no.bedrift.integration.api.dto.OpprettAvtaleRequest
 import no.bedrift.integration.api.dto.OpprettAvtaleResponse
 import no.bedrift.integration.service.AvtaleService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -13,7 +14,7 @@ import java.net.URI
 class AvtaleController(
     private val avtaleService: AvtaleService
 ) {
-    @PostMapping("/opprettAvtale")
+    @PostMapping("/opprett")
     fun opprettAvtale(@Valid @RequestBody req: OpprettAvtaleRequest): ResponseEntity<OpprettAvtaleResponse> {
         val kunderNummer = avtaleService.opprettKunde()
 
@@ -21,10 +22,11 @@ class AvtaleController(
 
         val brevStatus = avtaleService.sendAvtaleTilKunde(req.produktkode, avtaleNummer)
 
-        val avtaleStatus = avtaleService.oppdaterStatusTilAvtale(req.produktkode, avtaleNummer, brevStatus)
+        val skalFeile = req.produktkode == "ERROR"
+        val avtaleStatus = avtaleService.oppdaterStatusTilAvtale(req.produktkode, avtaleNummer, brevStatus, skalFeile)
 
-        val body = OpprettAvtaleResponse(status = "OK", avtaleId = avtaleNummer)
+        val body = OpprettAvtaleResponse(avtaleNummer, avtaleStatus)
 
-        return ResponseEntity.created(URI.create("/api/v1/avtaler/$avtaleNummer")).body(body)
+        return ResponseEntity.status(HttpStatus.CREATED).body(body)
     }
 }

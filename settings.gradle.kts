@@ -10,4 +10,4 @@ plugins {
 }
 
 rootProject.name = "avtale-prosjekt"
-include("integration-api", "fagsystem")
+include("integration-api")

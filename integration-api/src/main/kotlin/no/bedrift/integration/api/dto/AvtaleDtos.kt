@@ -1,6 +1,7 @@
 package no.bedrift.integration.api.dto
 
 import jakarta.validation.constraints.NotBlank
+import no.bedrift.integration.avtale.AvtaleStatus
 import java.util.*
 
 data class OpprettAvtaleRequest(
@@ -9,7 +10,6 @@ data class OpprettAvtaleRequest(
 )
 
 data class OpprettAvtaleResponse(
-    val status: String,
-    val avtaleId: UUID? = null,
-    val melding: String? = null
+    val avtaleNummer: UUID? = null,
+    val avtaleStatus: AvtaleStatus = AvtaleStatus.IKKE_AKTIVERT,
 )
