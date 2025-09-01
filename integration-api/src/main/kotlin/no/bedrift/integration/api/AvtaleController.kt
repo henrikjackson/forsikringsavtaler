@@ -7,7 +7,6 @@ import no.bedrift.integration.service.AvtaleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.net.URI
 
 @RestController
 @RequestMapping("/api/v1/avtaler")
@@ -22,6 +21,8 @@ class AvtaleController(
 
         val brevStatus = avtaleService.sendAvtaleTilKunde(req.produktkode, avtaleNummer)
 
+        // Ikke bærekraftig løsning for å teste feil
+        // Kunne f.eks i testene fått mocken til å kaste en exception isteden
         val skalFeile = req.produktkode == "ERROR"
         val avtaleStatus = avtaleService.oppdaterStatusTilAvtale(req.produktkode, avtaleNummer, brevStatus, skalFeile)
 

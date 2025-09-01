@@ -10,13 +10,9 @@ import java.util.UUID
 @Component
 @Profile("mock")
 class MockFagsystemClient : FagsystemClient {
-    override fun opprettKunde(): UUID {
-        return UUID.randomUUID()
-    }
+    override fun opprettKunde(): UUID = UUID.randomUUID()
 
-    override fun opprettAvtale(kundeId: String, produktkode: String): UUID {
-        return UUID.randomUUID()
-    }
+    override fun opprettAvtale(kundeId: String, produktkode: String): UUID = UUID.randomUUID()
 
     override fun oppdaterAvtaleStatus(kundeId: String, avtaleId: UUID, status: BrevStatus, skalFeile: Boolean?): AvtaleStatus {
         if (skalFeile!!) {

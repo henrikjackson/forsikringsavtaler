@@ -9,7 +9,5 @@ import java.util.UUID
 @Component
 @Profile("mock")
 class MockBrevtjenesteClient : BrevtjenesteClient {
-    override fun sendAvtaleTilKunde(kundeId: String, avtaleId: UUID): BrevStatus {
-        return BrevStatus.SENT
-    }
+    override fun sendAvtaleTilKunde(kundeId: String, avtaleId: UUID): BrevStatus = BrevStatus.SENT
 }
