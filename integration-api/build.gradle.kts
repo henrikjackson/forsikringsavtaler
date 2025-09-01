@@ -20,16 +20,14 @@ kotlin {
 tasks.test {
     useJUnitPlatform()
 }
-// --- System Test source set + task ---
+
 val systemTest by sourceSets.creating {
-    java.srcDir("src/systemTest/kotlin")
-    resources.srcDir("src/systemTest/resources")
-    // Ta med main + test output på classpath
+    java.srcDir("src/test/kotlin")
+    resources.srcDir("src/test/resources")
     compileClasspath += sourceSets["main"].output + sourceSets["test"].output + configurations.testRuntimeClasspath.get()
     runtimeClasspath += output + compileClasspath
 }
 
-// IKKE creating her — kun konfigurer de som allerede finnes
 configurations.named("systemTestImplementation") {
     extendsFrom(configurations.testImplementation.get())
 }
