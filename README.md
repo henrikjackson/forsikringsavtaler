@@ -24,4 +24,6 @@ Kotlin / Spring Boot:
 
 
 ## Tester / Klienten
-Ligger i `AvtaleTest.kt`
+For å kjøre tester manuelt selv ligger de i `AvtaleSystemTest.kt`
+
+Alle tester kjøres ved push / opprettelse av PR
