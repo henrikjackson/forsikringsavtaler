@@ -10,6 +10,7 @@
       <module name="avtale-prosjekt.fagsystem.test" options="-parameters" />
       <module name="avtale-prosjekt.integration-api" options="-parameters" />
       <module name="avtale-prosjekt.integration-api.main" options="-parameters" />
+      <module name="avtale-prosjekt.integration-api.systemTest" options="-parameters" />
       <module name="avtale-prosjekt.integration-api.test" options="-parameters" />
     </option>
   </component>
