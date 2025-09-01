@@ -20,28 +20,28 @@ kotlin {
 tasks.test {
     useJUnitPlatform()
 }
-
-val test by sourceSets.creating {
-    java.srcDir("src/test/kotlin")
-    resources.srcDir("src/test/resources")
+val systemTest by sourceSets.creating {
+    java.srcDir("src/systemTest/kotlin")
+    resources.srcDir("src/systemTest/resources")
     compileClasspath += sourceSets["main"].output + sourceSets["test"].output + configurations.testRuntimeClasspath.get()
     runtimeClasspath += output + compileClasspath
 }
 
-configurations.named("testImplementation") {
+// IKKE creating her — kun konfigurer de som allerede finnes
+configurations.named("systemTestImplementation") {
     extendsFrom(configurations.testImplementation.get())
 }
-configurations.named("testRuntimeOnly") {
+configurations.named("systemTestRuntimeOnly") {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
 
-tasks.register<Test>("test") {
+tasks.register<Test>("systemTest") {
     description = "Runs system (end-to-end) tests"
     group = "verification"
-    testClassesDirs = test.output.classesDirs
-    classpath = test.runtimeClasspath
+    testClassesDirs = systemTest.output.classesDirs
+    classpath = systemTest.runtimeClasspath
     useJUnitPlatform()
     shouldRunAfter("test")
 }
 
-tasks.named("check") { dependsOn("test") }
+tasks.named("check") { dependsOn("systemTest") }
