@@ -21,27 +21,27 @@ tasks.test {
     useJUnitPlatform()
 }
 
-val systemTest by sourceSets.creating {
+val test by sourceSets.creating {
     java.srcDir("src/test/kotlin")
     resources.srcDir("src/test/resources")
     compileClasspath += sourceSets["main"].output + sourceSets["test"].output + configurations.testRuntimeClasspath.get()
     runtimeClasspath += output + compileClasspath
 }
 
-configurations.named("systemTestImplementation") {
+configurations.named("testImplementation") {
     extendsFrom(configurations.testImplementation.get())
 }
-configurations.named("systemTestRuntimeOnly") {
+configurations.named("testRuntimeOnly") {
     extendsFrom(configurations.testRuntimeOnly.get())
 }
 
-tasks.register<Test>("systemTest") {
+tasks.register<Test>("test") {
     description = "Runs system (end-to-end) tests"
     group = "verification"
-    testClassesDirs = systemTest.output.classesDirs
-    classpath = systemTest.runtimeClasspath
+    testClassesDirs = test.output.classesDirs
+    classpath = test.runtimeClasspath
     useJUnitPlatform()
     shouldRunAfter("test")
 }
 
-tasks.named("check") { dependsOn("systemTest") }
+tasks.named("check") { dependsOn("test") }
