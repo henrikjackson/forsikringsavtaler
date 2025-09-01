@@ -1,12 +1,13 @@
 name: CI
-
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./avtale-prosjekt
+
     steps:
       - uses: actions/checkout@v4
 
@@ -16,17 +17,11 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
       - name: Build (unit + system tests)
         run: ./gradlew build --no-daemon
-
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: |
-            integration-api/build/reports/tests/test
-            integration-api/build/reports/tests/systemTest
